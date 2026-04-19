@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Webhook Inspector</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+</head>
+<body>
+
+<div id="channel-screen">
+  <div class="channel-box">
+    <div class="channel-logo">webhook<span>.</span>inspector</div>
+    <p>digite o nome do canal que deseja escutar</p>
+    <input type="text" id="channel-input" placeholder="ex: meu-projeto" autofocus />
+    <button onclick="startChannel()">entrar →</button>
+  </div>
+</div>
+
+<div id="main" class="main-hidden"></div>
+
+<div class="header">
+  <div class="logo">webhook<span>.</span>inspector</div>
+  <div class="status">
+    <div class="dot"></div>
+    <span id="conn-status">conectando...</span>
+  </div>
+</div>
+
+<div class="url-bar">
+  escutando em <code id="hook-url">http://localhost:8080/hook/meuteste</code> · todos os métodos HTTP
+</div>
+
+<div class="grid">
+  <div class="sidebar">
+   <div class="sidebar-header">
+  <span>requisições</span>
+  <div style="display:flex; align-items:center; gap:8px;">
+    <button class="clear-btn" onclick="clearHistory()">limpar</button>
+    <span class="badge" id="count">0</span>
+  </div>
+</div>
+
+<div class="filters">
+  <button class="filter active" onclick="setFilter('ALL', this)">todos</button>
+  <button class="filter" onclick="setFilter('POST', this)">POST</button>
+  <button class="filter" onclick="setFilter('GET', this)">GET</button>
+  <button class="filter" onclick="setFilter('PUT', this)">PUT</button>
+  <button class="filter" onclick="setFilter('DELETE', this)">DELETE</button>
+</div>
+    <div class="list" id="list">
+      <div class="empty">aguardando webhooks...</div>
+    </div>
+  </div>
+
+  <div class="detail">
+    <div class="detail-header" id="detail-header">
+      <span class="placeholder">selecione uma requisição</span>
+    </div>
+    <div class="tabs" id="tabs" style="display:none">
+  <div class="tab active" onclick="switchTab('body', this)">body</div>
+  <div class="tab" onclick="switchTab('headers', this)">headers</div>
+  <button class="copy-btn" id="copy-btn" onclick="copyContent()">copiar</button>
+</div>
+    <div class="content" id="content">
+      <div class="empty">← nada selecionado</div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
